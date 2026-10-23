@@ -1,7 +1,19 @@
+require("dotenv").config();
 const app = require("./app");
+const connectDB = require("./config/database");
 
-const port = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(`app is listening to port number ${port}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`DevTinder Server is running on port number ${PORT}`);
+    });
+  } catch (err) {
+    console.log("Failed to start DevTinder", err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
