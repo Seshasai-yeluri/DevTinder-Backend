@@ -26,4 +26,10 @@ router.patch(
   userController.updateUser,
 );
 
+router.delete(
+  "/deleteProfile",
+  authenticateAccessToken,
+  userController.deleteUser,
+);
+
 module.exports = router;

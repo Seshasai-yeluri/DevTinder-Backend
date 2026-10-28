@@ -1,5 +1,6 @@
 const userService = require("../services/userService");
 const jwt = require("jsonwebtoken");
+const APIError = require("../utils/APIError");
 
 const registerUser = async (req, res, next) => {
   const userInfo = await userService.registerUser(req.body);
@@ -59,9 +60,24 @@ const updateUser = async (req, res) => {
   });
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.user;
+  const deletedUserDetails = await userService.deleteUser(id);
+
+  if (!deletedUserDetails) {
+    throw new APIError("User doesn't exist", 404);
+  }
+  return res.status(200).json({
+    success: true,
+    message: "User deleted successfully",
+    userDetails: deletedUserDetails,
+  });
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   updateUser,
+  deleteUser,
 };

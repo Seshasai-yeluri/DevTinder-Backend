@@ -38,7 +38,7 @@ const loginUser = async (userDetails) => {
   const isMatched = await bcrypt.compare(password, passwordInDB);
 
   if (!isMatched) {
-    throw new APIError("Please enter valid credentials", 401);
+    throw new APIError("Please enter valid credentials!!", 401);
   }
   const removePassword = userInfo.toObject();
 
@@ -60,9 +60,15 @@ const updateUser = async (id, updateData) => {
   return updatedUserDetails;
 };
 
+const deleteUser = async (id) => {
+  const deletedUserDetails = await userRepository.deleteUserById(id);
+  return deletedUserDetails;
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   updateUser,
+  deleteUser,
 };
