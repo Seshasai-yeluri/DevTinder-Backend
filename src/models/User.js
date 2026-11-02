@@ -64,6 +64,8 @@ const userSchema = new mongoose.Schema(
   },
 );
 
+userSchema.index({ createdAt: -1 });
+
 const userModel = mongoose.model("User", userSchema);
 
 module.exports = userModel;

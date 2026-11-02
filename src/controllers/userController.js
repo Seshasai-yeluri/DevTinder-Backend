@@ -34,6 +34,16 @@ const loginUser = async (req, res) => {
   });
 };
 
+const getAllProfiles = async (req, res) => {
+  const { id } = req.user;
+  const usersDetails = await userService.getAllProfiles(id, req.query);
+  return res.status(200).json({
+    success: true,
+    message: "All users data",
+    usersDetails: usersDetails,
+  });
+};
+
 const getUserProfile = async (req, res) => {
   const { id, emailId } = req.user;
   const userDetails = await userService.getUserProfile(id);
@@ -77,6 +87,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  getAllProfiles,
   getUserProfile,
   updateUser,
   deleteUser,

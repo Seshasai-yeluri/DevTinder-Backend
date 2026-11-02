@@ -51,9 +51,24 @@ const updateConnectionRequestStatus = async (connectionRequestId, status) => {
   return updatedConnectionRequestDetails || null;
 };
 
+const findAllUsers = async (id) => {
+  const usersDetails = await connectionModel.find({
+    $or: [
+      {
+        fromUserId: { $eq: id },
+      },
+      {
+        toUserId: { $eq: id },
+      },
+    ],
+  });
+  return usersDetails;
+};
+
 module.exports = {
   createConnectionRequest,
   findConnectionStatus,
   findConnectionRequestById,
   updateConnectionRequestStatus,
+  findAllUsers,
 };

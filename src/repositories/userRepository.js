@@ -8,6 +8,17 @@ const createUser = async (userDetails) => {
   return userInfo;
 };
 
+const findAllUsers = async (id, connectionDetailsToIds, skip, limit) => {
+  const usersDetails = await userModel
+    .find({
+      _id: { $nin: [id, ...connectionDetailsToIds] },
+    })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+  return usersDetails;
+};
+
 const findUserByEmail = async (emailId) => {
   const userInfo = await userModel.findOne({
     emailId: emailId,
@@ -49,6 +60,7 @@ const deleteUserById = async (id) => {
 
 module.exports = {
   createUser,
+  findAllUsers,
   findUserByEmail,
   findUserById,
   findUserByEmailForAuthentication,

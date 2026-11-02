@@ -17,6 +17,13 @@ router.post(
   userController.loginUser,
 );
 
+router.get(
+  "/feed",
+  authenticateAccessToken,
+  validate(userValidation.getAllUsersProfilesSchema, "query"),
+  userController.getAllProfiles,
+);
+
 router.get("/profile", authenticateAccessToken, userController.getUserProfile);
 
 router.patch(
